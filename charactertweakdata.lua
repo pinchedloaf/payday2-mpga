@@ -7842,10 +7842,11 @@ function CharacterTweakData:_set_easy_wish()
 	self.concussion_multiplier = 1
 end
 function CharacterTweakData:_set_overkill_290()
+	log("Loading injected One Down States")
 	if SystemInfo:platform() == Idstring("PS3") then
-		self:_multiply_all_hp(3, 3)
+		self:_multiply_all_hp(2, 4)
 	else
-		self:_multiply_all_hp(3, 3)
+		self:_multiply_all_hp(2, 4)
 	end
 	self.hector_boss.weapon.saiga.FALLOFF = {
 		{
