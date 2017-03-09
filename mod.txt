@@ -1,0 +1,13 @@
+{
+	"name" : "Make Payday Great Again",
+	"description" : "Resets the One Down multipliers to classic Deathwish.",
+	"author" : "pinchedloaf",
+	"contact" : "pinchedloafs@gmail.com",
+	"version" : "0.1",
+  "hooks" : [
+    {
+        "hook_id" : "lib/tweak_data/charactertweakdata.lua",
+        "script_path" : "charactertweakdata.lua"
+    }
+]
+}
