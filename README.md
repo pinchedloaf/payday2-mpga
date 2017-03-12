@@ -16,7 +16,7 @@ Installation
 
 Notes
 -----
-Resets the One Down multipliers to classic Deathwish.
+Sets Deathwish/One Down to Overkill difficulty.
 
 Developer Notes
 ---------------
