@@ -3,10 +3,10 @@
 	"description" : "Resets the One Down multipliers to classic Deathwish.",
 	"author" : "pinchedloaf",
 	"contact" : "pinchedloafs@gmail.com",
-	"version" : "0.2",
+	"version" : "0.3",
   "hooks" : [
     {
-        "hook_id" : "lib/tweak_data/charactertweakdata.lua",
+        "hook_id" : "lib/tweak_data/charactertweakdata",
         "script_path" : "charactertweakdata.lua"
     }
 ]

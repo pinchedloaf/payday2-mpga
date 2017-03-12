@@ -1,3 +1,4 @@
+log("Making Payday 2 Great Again...")
 CharacterTweakData = CharacterTweakData or class()
 function CharacterTweakData:init(tweak_data)
 	self:_create_table_structure()
@@ -7842,7 +7843,6 @@ function CharacterTweakData:_set_easy_wish()
 	self.concussion_multiplier = 1
 end
 function CharacterTweakData:_set_overkill_290()
-	log("Loading injected One Down States")
 	if SystemInfo:platform() == Idstring("PS3") then
 		self:_multiply_all_hp(2, 4)
 	else
@@ -8299,7 +8299,6 @@ function CharacterTweakData:_set_overkill_290()
 	self.concussion_multiplier = 1
 end
 function CharacterTweakData:_set_sm_wish()
-	log("Loading injected One Down States")
 	if SystemInfo:platform() == Idstring("PS3") then
 		self:_multiply_all_hp(2, 4)
 	else
@@ -9315,3 +9314,4 @@ function CharacterTweakData:character_map()
 	}
 	return char_map
 end
+log("Payday 2 is Great Again")
