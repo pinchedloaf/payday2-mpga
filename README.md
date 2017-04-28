@@ -8,15 +8,17 @@ BLT 1.08+ (r15_r5) or later
 - https://github.com/JamesWilko/Payday-2-BLT/releases/tag/1.08
 
 Payday 2
-- Update 133 (2017-03-02)
+- Update 143 (2017-04-27)
 
 Installation
 ------------
 - Copy to mods directory after setting up BLT.
+- Setup hotkeys for BLT.
 
 Notes
 -----
-Sets Deathwish/One Down to Overkill difficulty.
+- Sets Deathwish/One Down to Overkill difficulty.
+- Added 'Show me the money', which adds 10 continential coins when actived.
 
 Developer Notes
 ---------------

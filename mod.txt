@@ -3,11 +3,20 @@
 	"description" : "An elegant weapon for a more civilized age.",
 	"author" : "pinchedloaf",
 	"contact" : "pinchedloafs@gmail.com",
-	"version" : "0.4",
-  "hooks" : [
+	"version" : "0.5",
+    "hooks" : [
     {
         "hook_id" : "lib/tweak_data/tweakdata",
         "script_path" : "tweakdata.lua"
-    }
-]
+    }],
+    "keybinds" : [
+    {
+        "keybind_id" : "add_cc",
+        "name" : "Show Me The Money",
+        "description" : "Add 10 Continential Coins",
+        "script_path" : "add_cc.lua",
+        "run_in_menu" : true,
+        "run_in_game" : false,
+        "localized" : false
+    }]
 }

@@ -36,6 +36,9 @@ require("lib/tweak_data/CustomSafehouseTweakData")
 require("lib/tweak_data/TangoTweakData")
 require("lib/tweak_data/SubtitleTweakData")
 require("lib/tweak_data/InputTweakData")
+require("lib/tweak_data/ArmorSkinsTweakData")
+require("lib/tweak_data/CrimeSpreeTweakData")
+require("lib/tweak_data/FireTweakData")
 TweakData = TweakData or class()
 function TweakData:_init_wip_tweak_data()
 end
@@ -586,6 +589,8 @@ function TweakData:init()
 	self.tango = TangoTweakData:new(self)
 	self.subtitles = SubtitleTweakData:new(self)
 	self.input = InputTweakData:new(self)
+	self.crime_spree = CrimeSpreeTweakData:new(self)
+	self.fire = FireTweakData:new(self)
 	self.ai_carry = {}
 	self.ai_carry.throw_distance = 500
 	self.ai_carry.throw_force = 100
@@ -735,6 +740,7 @@ function TweakData:init()
 	self.screen_colors.competitive_color = Color(255, 41, 204, 122) / 255
 	self.screen_colors.mutators_color = Color(255, 211, 133, 255) / 255
 	self.screen_colors.mutators_color_text = Color(255, 211, 133, 255) / 255
+	self.screen_colors.crime_spree_risk = Color(255, 255, 255, 0) / 255
 	self.screen_colors.heat_cold_color = Color(255, 255, 51, 51) / 255
 	self.screen_colors.heat_warm_color = Color("ff7f00")
 	self.screen_colors.heat_standard_color = Color(255, 255, 255, 255) / 255
@@ -810,6 +816,91 @@ function TweakData:init()
 	self.gui.DIALOG_LAYER = 1100
 	self.gui.MOUSE_LAYER = 1200
 	self.gui.SAVEFILE_LAYER = 1400
+	self.color_grading = {
+		{
+			text_id = "menu_color_off",
+			value = "color_payday"
+		},
+		{
+			text_id = "menu_color_default",
+			value = nil
+		},
+		{
+			text_id = "menu_color_heat",
+			value = "color_heat"
+		},
+		{
+			text_id = "menu_color_nice",
+			value = "color_nice"
+		},
+		{
+			text_id = "menu_color_bhd",
+			value = "color_bhd"
+		},
+		{
+			text_id = "menu_color_xgen",
+			value = "color_xgen"
+		},
+		{
+			text_id = "menu_color_xxxgen",
+			value = "color_xxxgen"
+		},
+		{
+			text_id = "menu_color_matrix_classic",
+			value = "color_matrix_classic"
+		},
+		{
+			text_id = "menu_color_sin_classic",
+			value = "color_sin_classic"
+		},
+		{
+			text_id = "menu_color_sepia",
+			value = "color_sepia"
+		},
+		{
+			text_id = "menu_color_sunsetstrip",
+			value = "color_sunsetstrip"
+		},
+		{
+			text_id = "menu_color_colorful",
+			value = "color_colorful"
+		},
+		{
+			text_id = "menu_color_madplanet",
+			value = "color_madplanet"
+		}
+	}
+	self.community_challenges_stage_multiplier = 1.5
+	self.community_challenges = {
+		{
+			statistic_id = "type_kills_law",
+			text_id = "menu_community_challenges_kills",
+			base_target = 400000
+		},
+		{
+			statistic_id = "sb17_challenge_5",
+			text_id = "menu_community_challenges_hours_played",
+			base_target = 20000,
+			display_multiplier = 0.016666668
+		},
+		{
+			statistic_id = "sb17_challenge_7",
+			text_id = "menu_community_challenges_money_earned",
+			base_target = 180000,
+			additional_zeroes = 6
+		},
+		{
+			statistic_id = "sb17_challenge_6",
+			text_id = "menu_community_challenges_hours_played_team",
+			base_target = 10000,
+			display_multiplier = 0.016666668
+		},
+		{
+			statistic_id = "sb17_challenge_4",
+			text_id = "menu_community_challenges_swing_dancing",
+			base_target = 500
+		}
+	}
 	self.overlay_effects = {}
 	self.overlay_effects.spectator = {
 		blend_mode = "normal",
@@ -1583,6 +1674,12 @@ Play the full version soon to get your full PAYDAY!]],
 			grenade_type = "frag_com",
 			kill = true,
 			is_civilian = false
+		},
+		daily_grenades_dynamite = {
+			trophy_stat = "daily_grenades",
+			grenade_type = "dynamite",
+			kill = true,
+			is_civilian = false
 		}
 	}
 	self.achievement.shotgun_single_shot_kills = {
@@ -1888,6 +1985,19 @@ Play the full version soon to get your full PAYDAY!]],
 				"tank",
 				"spooc",
 				"medic"
+			}
+		},
+		grv_2 = {
+			award = "grv_2",
+			weapon = "coal",
+			count_no_reload = 32
+		},
+		grv_3 = {
+			stat = "grv_3_stats",
+			weapons = {
+				"siltstone",
+				"flint",
+				"coal"
 			}
 		}
 	}
@@ -2348,6 +2458,16 @@ Play the full version soon to get your full PAYDAY!]],
 			difficulty = easywish_and_above,
 			job = "fish"
 		},
+		easywish_glace = {
+			award = "glace_5",
+			difficulty = easywish_and_above,
+			job = "glace"
+		},
+		easywish_run = {
+			award = "run_5",
+			difficulty = easywish_and_above,
+			job = "run"
+		},
 		complete_pines_easywish = {
 			award = "pick_59",
 			difficulty = easywish_and_above,
@@ -2650,6 +2770,16 @@ Play the full version soon to get your full PAYDAY!]],
 			difficulty = deathwish_and_above,
 			job = "fish"
 		},
+		death_glace = {
+			award = "glace_6",
+			difficulty = deathwish_and_above,
+			job = "glace"
+		},
+		death_run = {
+			award = "run_6",
+			difficulty = deathwish_and_above,
+			job = "run"
+		},
 		complete_pines_deathwish = {
 			award = "deer_5",
 			difficulty = deathwish_and_above,
@@ -2946,6 +3076,16 @@ Play the full version soon to get your full PAYDAY!]],
 			award = "fish_3",
 			difficulty = sm_wish_and_above,
 			job = "fish"
+		},
+		sm_wish_glace = {
+			award = "glace_7",
+			difficulty = sm_wish_and_above,
+			job = "glace"
+		},
+		sm_wish_run = {
+			award = "run_7",
+			difficulty = sm_wish_and_above,
+			job = "run"
 		},
 		complete_pines_sm_wish = {
 			award = "axe_59",
@@ -3321,6 +3461,70 @@ Play the full version soon to get your full PAYDAY!]],
 			everyone_killed_by_melee = 0,
 			everyone_killed_by_grenade = 0
 		},
+		grv_1 = {
+			award = "grv_1",
+			difficulty = overkill_and_above,
+			equipped_outfit = {
+				primaries = {
+					"wpn_fps_snp_siltstone",
+					"wpn_fps_ass_flint"
+				},
+				secondary = "wpn_fps_smg_coal",
+				melee_weapon = "oxide"
+			}
+		},
+		grv_4 = {
+			award = "grv_4",
+			stealth = true,
+			equipped_outfit = {
+				primaries = {
+					"wpn_fps_snp_siltstone",
+					"wpn_fps_ass_flint"
+				},
+				secondary = "wpn_fps_smg_coal",
+				melee_weapon = "oxide"
+			}
+		},
+		glace_1 = {
+			award = "glace_1",
+			difficulty = normal_and_above,
+			job = "glace"
+		},
+		glace_2 = {
+			award = "glace_2",
+			difficulty = hard_and_above,
+			job = "glace"
+		},
+		glace_3 = {
+			award = "glace_3",
+			difficulty = veryhard_and_above,
+			job = "glace"
+		},
+		glace_4 = {
+			award = "glace_4",
+			difficulty = overkill_and_above,
+			job = "glace"
+		},
+		run_1 = {
+			award = "run_1",
+			difficulty = normal_and_above,
+			job = "run"
+		},
+		run_2 = {
+			award = "run_2",
+			difficulty = hard_and_above,
+			job = "run"
+		},
+		run_3 = {
+			award = "run_3",
+			difficulty = veryhard_and_above,
+			job = "run"
+		},
+		run_4 = {
+			award = "run_4",
+			difficulty = overkill_and_above,
+			job = "run"
+		},
 		bain_jobs = {
 			challenge_stat = "bain_jobs",
 			complete_job = true,
@@ -3656,6 +3860,11 @@ Play the full version soon to get your full PAYDAY!]],
 				detection = {min = 75, max = 100}
 			}
 		},
+		trophy_glace_completion = {
+			trophy_stat = "trophy_glace_completion",
+			difficulty = normal_and_above,
+			job = "glace"
+		},
 		daily_classics = {
 			trophy_stat = "daily_classics",
 			jobs = {
@@ -3663,7 +3872,9 @@ Play the full version soon to get your full PAYDAY!]],
 				"flat",
 				"dinner",
 				"pal",
-				"man"
+				"man",
+				"run",
+				"glace"
 			}
 		},
 		daily_discord = {
@@ -3955,7 +4166,9 @@ Play the full version soon to get your full PAYDAY!]],
 		"dinner",
 		"pal",
 		"man",
-		"flat"
+		"flat",
+		"run",
+		"glace"
 	}
 	self.achievement.job_list.locke = {"pbr", "pbr2"}
 	self.achievement.job_list.jimmy = {"mad", "dark"}
@@ -4706,6 +4919,8 @@ Play the full version soon to get your full PAYDAY!]],
 		{track = "track_49"},
 		{track = "track_50", lock = "friend"},
 		{track = "track_51", lock = "spa"},
+		{track = "track_52"},
+		{track = "track_53"},
 		{
 			track = "track_32_lcv"
 		},
@@ -5056,6 +5271,7 @@ Play the full version soon to get your full PAYDAY!]],
 	self.blame.alarm_pager_bluff_failed = "hint_alarm_pager_bluff_failed"
 	self.blame.alarm_pager_not_answered = "hint_alarm_pager_not_answered"
 	self.blame.alarm_pager_hang_up = "hint_alarm_pager_hang_up"
+	self.blame.civ_too_many_killed = "hint_civ_too_many_killed"
 	self.blame.civ_alarm = "hint_alarm_civ"
 	self.blame.cop_alarm = "hint_alarm_cop"
 	self.blame.gan_alarm = "hint_alarm_cop"
@@ -5201,6 +5417,21 @@ Play the full version soon to get your full PAYDAY!]],
 	self.projectiles.launcher_incendiary_arbiter.name_id = "bm_launcher_incendiary"
 	self.projectiles.launcher_incendiary_arbiter.burn_duration = 3
 	self.projectiles.launcher_incendiary_arbiter.burn_tick_period = 0.5
+	self.projectiles.fir_com = {}
+	self.projectiles.fir_com.damage = 3
+	self.projectiles.fir_com.curve_pow = 0.1
+	self.projectiles.fir_com.player_damage = 3
+	self.projectiles.fir_com.fire_dot_data = {
+		dot_damage = 25,
+		dot_trigger_max_distance = 3000,
+		dot_trigger_chance = 100,
+		dot_length = 2.1,
+		dot_tick_period = 0.5
+	}
+	self.projectiles.fir_com.range = 500
+	self.projectiles.fir_com.name_id = "bm_grenade_fir_com"
+	self.projectiles.fir_com.sound_event = "white_explosion"
+	self.projectiles.fir_com.effect_name = "effects/payday2/particles/explosions/grenade_incendiary_explosion"
 	self.projectiles.rocket_frag = {}
 	self.projectiles.rocket_frag.launch_speed = 2500
 	self.projectiles.rocket_frag.adjust_z = 0
@@ -6042,7 +6273,7 @@ function TweakData:get_controller_help_coords()
 			align = "left"
 		}
 		coords.normal.r2_trigger = {
-			id = "menu_button_shout",
+			id = "menu_button_shout_and_stop",
 			x = 511,
 			y = 55,
 			align = "left"
@@ -6259,7 +6490,7 @@ function TweakData:get_controller_help_coords()
 			align = "left"
 		}
 		coords.normal.right_shoulder = {
-			id = "menu_button_shout",
+			id = "menu_button_shout_and_stop",
 			x = 390,
 			y = -10,
 			align = "center"
@@ -6482,7 +6713,7 @@ function TweakData:get_controller_help_coords()
 			align = "left"
 		}
 		coords.normal.right_shoulder = {
-			id = "menu_button_shout",
+			id = "menu_button_shout_and_stop",
 			x = 512,
 			y = 49,
 			align = "left"
