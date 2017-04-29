@@ -3,7 +3,7 @@
 	"description" : "An elegant weapon for a more civilized age.",
 	"author" : "pinchedloaf",
 	"contact" : "pinchedloafs@gmail.com",
-	"version" : "0.5",
+	"version" : "0.6",
     "hooks" : [
     {
         "hook_id" : "lib/tweak_data/tweakdata",
