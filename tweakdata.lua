@@ -153,7 +153,7 @@ function TweakData:set_difficulty()
 	elseif Global.game_settings.difficulty == "overkill_290" then
 		self:_set_overkill_290()
 	elseif Global.game_settings.difficulty == "sm_wish" then
-		self:_set_sm_wish()
+		self:_set_smwish()
 	else
 		self:_set_hard()
 	end
