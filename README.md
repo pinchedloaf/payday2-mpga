@@ -8,7 +8,7 @@ BLT 1.08+ (r15_r5) or later
 - https://github.com/JamesWilko/Payday-2-BLT/releases/tag/1.08
 
 Payday 2
-- Update 143 (2017-04-27)
+- Update 146 (2017-05-18)
 
 Installation
 ------------
