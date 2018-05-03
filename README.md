@@ -4,8 +4,8 @@ Make Payday 2 Great Again.
 
 Required Versions
 -----------------
-BLT 1.08+ (r15_r5) or later
-- https://github.com/JamesWilko/Payday-2-BLT/releases/tag/1.08
+BLT 2.0+ (r6_r16) or later
+- https://github.com/JamesWilko/Payday-2-BLT/releases/tag/2.0
 
 Payday 2
 - Update 179.2 (2018-04-30)
