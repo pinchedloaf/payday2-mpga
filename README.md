@@ -1,28 +1,32 @@
 payday2-mpga
 ------------
-Make Payday 2 Great Again.
+Make Payday 2 Great Again.*
 
 Required Versions
 -----------------
-BLT 2.0+ (r6_r16) or later
-- https://github.com/JamesWilko/Payday-2-BLT/releases/tag/2.0
+SuperBLT 2.0+ (r6_r16) or later
+- https://superblt.znix.xyz/
 
 Payday 2
-- Update 179.2 (2018-04-30)
+- Update 200.1 (2020-11-13)
 
 Installation
 ------------
-- Copy to mods directory after setting up BLT.
-- Setup hotkeys for BLT.
+- Add `WSOCK32.dll` to `payday2` root directory.
+- Copy MPGA to `mods` sub-directory.
+- Launch. SuperBLT will automatically update if needed.
 
 Notes
 -----
-- Sets Deathwish/One Down to Overkill difficulty.
-- Added 'Show me the money', which adds 10 continential coins when actived.
-
+- Fast Bile: Immediately spawn bile helicopter drops.
+- Time for Callout: Time between Bain cooking callouts.
+- Twitch Stay: Make Twitch stay.
+- Incognito: Don't display mod to other players.
+ 
 Developer Notes
 ---------------
 
+tweakdata.lua
 | var               | difficulty | HP* | Headshot* | Enemy AI  |
 |-------------------|------------|-----|-----------|-----------|
 | _set_easy         | normal     | 1   | 1         | normal    |
@@ -32,3 +36,5 @@ Developer Notes
 | _set_overkill_145 | mayhem     | 3   | 3         | expert    |
 | _set_easy_wish    | deathwish  | 6   | 1.5       | expert    |
 | _set_overkill_290 | one down   | 6   | 1.5       | deathwish |
+
+* This is sarcasm. MAGA is stupid. Don't be snowflakes.
