@@ -19,8 +19,12 @@
       "script_path": "coreelementtimer.lua"
     },
     {
+      "hook_id": "lib/managers/experiencemanager",
+      "script_path": "experiencemanager.lua"
+    },
+    {
       "hook_id": "lib/managers/menumanager",
       "script_path": "incognito.lua"
     }
-  ],
+  ]
 }
