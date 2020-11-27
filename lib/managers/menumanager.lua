@@ -1,11 +1,12 @@
+-- Report no mods to clients.
 function MenuCallbackHandler:is_modded_client()
-    return false
+  return false
 end
 
 function MenuCallbackHandler:is_not_modded_client()
-    return true
+  return true
 end
 
 function MenuCallbackHandler:build_mods_list()
-    return {}
+  return {}
 end

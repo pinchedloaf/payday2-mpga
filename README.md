@@ -21,8 +21,12 @@ Notes
 - Fast Bile: Immediately spawn bile helicopter drops.
 - Time for Callout: Time between Bain cooking callouts.
 - Twitch Stay: Make Twitch stay.
-- XP Boost: Override contract base XP.
-- Incognito: Don't display mod to other players.
+- Cook Waypoint: Show a ! marker for next cook item to add.
+- Stacking: Enable bag stacking with penalties.
+- Job Heat: Reset all job heat to baseline.
+- XP Boost: Boost per objective XP.
+- Incognito: Don't display mod to other players. You will still be marked as a
+    cheater if you carry multiple bags in another players game.
  
 Developer Notes
 ---------------

@@ -4,14 +4,29 @@ MPGA.ModPath = ModPath
 MPGA.SaveFile = MPGA.SaveFile or SavePath .. "mpga.txt"
 MPGA.ModOptions = MPGA.ModPath .. "menus/modoptions.txt"
 MPGA.settings = MPGA.settings or {}
+MPGA.stack_penalties = MPGA.stack_penalties or {}
 
+MPGA.stack_penalties = {
+  ["light"] = 10,
+  ["coke_light"] = 10,
+  ["medium"] = 30,
+  ["heavy"] = 40,
+  ["very_heavy"] = 50,
+  ["mega_heavy"] = 60,
+  ["being"] = 40,
+  ["slightly_very_heavy"] = 40
+}
+
+-- MPGA Settings default, load, save
 function MPGA:Reset()
   self.settings = {
     delay = 1,
     bile = true,
     twitch = true,
-    xp = 500000,
-    xp_toggle = true,
+    stack_enable = true,
+    cook_enable = true,
+    xp_enable = true,
+    xp_amount = 500000,
   }
   self:Save()
 end
@@ -38,6 +53,30 @@ end
 
 MPGA:Load()
 
+-- Getter methods for MPGA
+function MPGA:CookEnabled()
+  return self.settings.cook_enable
+end
+
+function MPGA:StackEnabled()
+  return self.settings.stack_enable
+end
+
+function MPGA:XpEnabled()
+  return self.settings.xp_enable
+end
+
+function MPGA:XpAmount()
+  return self.settings.xp_amount
+end
+
+function MPGA:GetWeightForType(carry_id)
+  local carry_type = tweak_data.carry[carry_id].type
+  return self.stack_penalties[carry_type] ~= nil and ((100 - self.stack_penalties[carry_type]) / 100) or 1
+end
+
+
+-- Menu configuration
 Hooks:Add("LocalizationManagerPostInit", "mpga_loc", function(loc)
   LocalizationManager:add_localized_strings({
     ["mpga_menu_title"] = "MPGA",
@@ -48,10 +87,14 @@ Hooks:Add("LocalizationManagerPostInit", "mpga_loc", function(loc)
     ["mpga_menu_bile_desc"] = "Bile immediately flies in on flare trigger.",
     ["mpga_menu_twitch_title"] = "Twitch Stay",
     ["mpga_menu_twitch_desc"] = "Twitch will stay after arriving.",
-    ["mpga_menu_xp_toggle_title"] = "XP Boost",
-    ["mpga_menu_xp_toggle_desc"] = "Only boost base XP if enabled.",
-    ["mpga_menu_xp_title"] = "XP Contract Amount",
-    ["mpga_menu_xp_desc"] = "Contract completion XP override.",
+    ["mpga_menu_xp_enable_title"] = "XP Boost",
+    ["mpga_menu_xp_enable_desc"] = "Only boost base XP if enabled.",
+    ["mpga_menu_xp_amount_title"] = "XP Objective Amount",
+    ["mpga_menu_xp_amount_desc"] = "Objective completion XP Boost.",
+    ["mpga_menu_cook_enable_title"] = "Cook Helper",
+    ["mpga_menu_cook_enable_desc"] = "Enable cook helper waypoints.",
+    ["mpga_menu_stack_enable_title"] = "Stack Bags",
+    ["mpga_menu_stack_enable_desc"] = "Enable bag stacking. Movement penalty applies.",
   })
 end)
 
@@ -95,6 +138,7 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MPGAOptions", function( menu_manage
   MenuHelper:AddSlider({
     id = "mpga_menu_delay_callback",
     title = "mpga_menu_delay_title",
+    desc = "mpga_menu_delay_desc",
     callback = "mpga_menu_delay_callback",
     value = MPGA.settings.delay,
     min = 1,
@@ -105,6 +149,34 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MPGAOptions", function( menu_manage
     priority = 13,
   })
 
+  MenuCallbackHandler.mpga_menu_cook_enable_callback = function(self, item)
+    MPGA.settings.cook_enable = item:value() == "on" and true or false
+    MPGA:Save()
+  end
+  MenuHelper:AddToggle({
+    id = "mpga_menu_cook_enable_callback",
+    title = "mpga_menu_cook_enable_title",
+    desc = "mpga_menu_cook_enable_desc",
+    callback = "mpga_menu_cook_enable_callback",
+    value = MPGA.settings.cook_enable,
+    menu_id = MPGA.options_menu,
+    priority = 6,
+  })
+
+  MenuCallbackHandler.mpga_menu_stack_enable_callback = function(self, item)
+    MPGA.settings.stack_enable = item:value() == "on" and true or false
+    MPGA:Save()
+  end
+  MenuHelper:AddToggle({
+    id = "mpga_menu_stack_enable_callback",
+    title = "mpga_menu_stack_enable_title",
+    desc = "mpga_menu_stack_enable_desc",
+    callback = "mpga_menu_stack_enable_callback",
+    value = MPGA.settings.stack_enable,
+    menu_id = MPGA.options_menu,
+    priority = 6,
+  })
+
   MenuHelper:AddDivider({
     id = "xp_divider",
     size = 16,
@@ -112,30 +184,30 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "MPGAOptions", function( menu_manage
     priority = 3,
   })
 
-  MenuCallbackHandler.mpga_menu_xp_toggle_callback = function(self, item)
-    MPGA.settings.xp_toggle = item:value() == "on" and true or false
+  MenuCallbackHandler.mpga_menu_xp_enable_callback = function(self, item)
+    MPGA.settings.xp_enable = item:value() == "on" and true or false
     MPGA:Save()
   end
   MenuHelper:AddToggle({
-    id = "mpga_menu_xp_toggle_callback",
-    title = "mpga_menu_xp_toggle_title",
-    desc = "mpga_menu_xp_toggle_desc",
-    callback = "mpga_menu_xp_toggle_callback",
-    value = MPGA.settings.xp_toggle,
+    id = "mpga_menu_xp_enable_callback",
+    title = "mpga_menu_xp_enable_title",
+    desc = "mpga_menu_xp_enable_desc",
+    callback = "mpga_menu_xp_enable_callback",
+    value = MPGA.settings.xp_enable,
     menu_id = MPGA.options_menu,
     priority = 2,
   })
 
-  MenuCallbackHandler.mpga_menu_xp_callback = function(self, item)
-    MPGA.settings.xp = math.floor(item:value())
+  MenuCallbackHandler.mpga_menu_xp_amount_callback = function(self, item)
+    MPGA.settings.xp_amount = math.floor(item:value())
     MPGA:Save()
   end
   MenuHelper:AddSlider({
-    id = "mpga_menu_xp_callback",
-    title = "mpga_menu_xp_title",
-    desc = "mpga_menu_xp_desc",
-    callback = "mpga_menu_xp_callback",
-    value = MPGA.settings.xp,
+    id = "mpga_menu_xp_amount_callback",
+    title = "mpga_menu_xp_amount_title",
+    desc = "mpga_menu_xp_amount_desc",
+    callback = "mpga_menu_xp_amount_callback",
+    value = MPGA.settings.xp_amount,
     min = 0,
     max = 500000,
     step = 1000,
